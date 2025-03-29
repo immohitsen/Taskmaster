@@ -1,5 +1,5 @@
 <template>
-    <div class="w-64 h-screen flex flex-col bg-gray-900 text-white border-r border-gray-700">
+    <div class="w-64 h-full flex flex-col bg-gray-900 text-white border-r border-gray-700">
       <!-- Header with Close Button -->
       <div class="p-4 border-b border-gray-700 flex justify-between items-center">
         <h1 class="text-xl font-bold text-indigo-400">TaskMaster</h1>

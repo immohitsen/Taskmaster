@@ -1,58 +1,45 @@
 <template>
   <div class="flex bg-gray-800 h-screen relative">
     <!-- Mobile Menu Button -->
-    <button 
-      v-if="!isSidebarOpen"
-      @click="isSidebarOpen = !isSidebarOpen"
-      class="md:hidden fixed top-6 left-4 z-50 p-2 text-gray-400 hover:text-white bg-gray-800 rounded-lg shadow-md"
-    >
+    <button v-if="!isSidebarOpen" @click="isSidebarOpen = !isSidebarOpen"
+      class="md:hidden fixed top-6 left-4 z-50 p-2 text-gray-400 hover:text-white bg-gray-800 rounded-lg shadow-md">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
 
     <!-- Sidebar -->
-    <div 
+    <div
       class="w-64 h-screen flex flex-col bg-gray-900 text-white border-r border-gray-700 shadow-lg transition-transform duration-300 transform fixed md:relative z-40"
       :class="{
         '-translate-x-full md:translate-x-0': !isSidebarOpen,
         'translate-x-0': isSidebarOpen
-      }"
-    >
-      <ListSidebar
-        :lists="lists"
-        :activeListId="activeListId"
-        @set-active-list="setActiveList"
-        @add-list="addList"
-        @edit-list="editList"
-        @delete-list="deleteList"
-        @logout="handleLogout"
-        @close-sidebar="isSidebarOpen = false"
-      />
+      }">
+      <ListSidebar :lists="lists" :activeListId="activeListId" @set-active-list="setActiveList" @add-list="addList"
+        @edit-list="editList" @delete-list="deleteList" @logout="handleLogout" @close-sidebar="isSidebarOpen = false" />
     </div>
 
     <!-- Main Content -->
     <div class="flex-1 p-6  text-white overflow-auto mt-12 md:mt-0">
-      <TaskList
-        v-if="activeList"
-        :key="activeListId"
-        :tasks="activeList.tasks"
-        :listName="activeList.title"
-        @add-task="addTask"
-        @toggle-task="toggleTask"
-        @delete-task="deleteTask"
-      />
-      <div v-else class="text-center text-gray-500 text-xl mt-8">
-        Select or create a list
+      <TaskList v-if="activeList" :key="activeListId" :tasks="activeList.tasks" :listName="activeList.title"
+        @add-task="addTask" @toggle-task="toggleTask" @delete-task="deleteTask" />
+      <div v-else class="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div class="max-w-md space-y-4">
+          <h3 class="text-xl font-semibold text-gray-300">Welcome to TaskMaster</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Organize your tasks efficiently by creating dedicated lists for different projects or categories.
+          </p>
+          <div class="pt-4 border-t border-gray-700 mt-4">
+            <p class="text-gray-500 text-sm">No list selected</p>
+
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Mobile Overlay -->
-    <div 
-      v-if="isSidebarOpen"
-      @click="isSidebarOpen = false"
-      class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-    ></div>
+    <div v-if="isSidebarOpen" @click="isSidebarOpen = false"
+      class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"></div>
 
     <!-- Auth Modal -->
     <AuthModal v-if="!isAuthenticated" @login="handleLogin" />
